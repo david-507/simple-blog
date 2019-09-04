@@ -25,7 +25,7 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">Simple blog</h5>
     <c:choose>
-        <c:when test="${not empty sessionScope.userLoggedIn}">
+        <c:when test="${not empty sessionScope.user}">
             <jsp:include page="includes/menu_logged.jsp" flush="true">
                 <jsp:param name="inicio" value="inicio" />
                 <jsp:param name="usuario" value="${sessionScope.userLoggedIn.nombre}" />
@@ -49,7 +49,7 @@
             <h1 class="jumbotron-heading">Simple blog</h1>
             <h2 class="jumbotron-heading">Un blog sobre hibernate</h2>
             <p class="lead text-muted">Tutoriales, información y tips sobre la mejor tecnologia de persistencia Java y .Net.</p>
-            <c:if test="${empty sessionScope.userLoggedIn}">
+            <c:if test="${empty sessionScope.user}">
                 <p>
                     <a href="/signup" class="btn btn-primary my-2">Regrístrate</a>
                 </p>
@@ -163,6 +163,7 @@
 <!-- /container -->
 
 <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
 <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/assets/js/jquery.dotdotdot.min.js"></script>
 <script src="/assets/js/holder.min.js"></script>

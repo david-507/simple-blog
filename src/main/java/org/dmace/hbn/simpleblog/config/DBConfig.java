@@ -21,7 +21,8 @@ public class DBConfig {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:testa;DB_CLOSE_ON_EXIT=FALSE");
+//        dataSource.setUrl("jdbc:h2:mem:testa;DB_CLOSE_ON_EXIT=FALSE");
+        dataSource.setUrl("jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
@@ -37,7 +38,7 @@ public class DBConfig {
         emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         Properties additionalProperties = new Properties();
-        additionalProperties.setProperty("javax.persistence.schema-generation.database.action", "create");
+        additionalProperties.setProperty("javax.persistence.schema-generation.database.action", "create-drop");
         additionalProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         additionalProperties.put("hibernate.show_sql", "true");
         additionalProperties.put("hibernate.format_sql", "true");

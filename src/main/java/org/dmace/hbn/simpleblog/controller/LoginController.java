@@ -2,7 +2,8 @@ package org.dmace.hbn.simpleblog.controller;
 
 import org.dmace.hbn.simpleblog.model.User;
 import org.dmace.hbn.simpleblog.model.bean.LoginBean;
-import org.dmace.hbn.simpleblog.repository.UserDAO;
+import org.dmace.hbn.simpleblog.repository.UserRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    UserDAO repository;
+    UserRepository repository;
+
+    @Autowired
+    HttpSession session;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -26,11 +30,31 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String doLogin(@ModelAttribute("userLogin") LoginBean bean, BindingResult result, Model model) {
-        List<User> users = repository.getAll();
-        model.addAttribute("userLogin", new LoginBean());
-        model.addAttribute("message", "testing...");
-        model.addAttribute("totalUsers", users.size());
-        return "login";
+    public String doLogin(@ModelAttribute("userLogin") LoginBean lb, BindingResult br, Model model) {
+        String result = "redirect:/";
+        User user = repository.findByEmail(lb.getEmail());
+
+        if( loginSuccess(lb, user) ) {
+            session.setAttribute("user", user);
+        } else {
+            model.addAttribute("userLogin", lb);
+            model.addAttribute("error", "email or password incorrect");
+            result = "/login";
+        }
+
+        return result;
+    }
+
+    @GetMapping("/logout")
+    public String doLogout() {
+        if(session!=null) {
+            session.removeAttribute("user");
+            session.invalidate();
+        }
+        return "redirect:/";
+    }
+
+    private boolean loginSuccess(LoginBean lb, User user) {
+        return user != null && BCrypt.checkpw(lb.getPassword(), user.getPassword());
     }
 }

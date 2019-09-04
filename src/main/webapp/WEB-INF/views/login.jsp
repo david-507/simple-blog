@@ -35,7 +35,7 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        <p class="mt-5 mb-3 text-muted">${message} - ${totalUsers}</p>
+        <p class="mt-5 mb-3 text-muted">${error}</p>
     </form:form>
 
 
@@ -45,6 +45,7 @@
 <!-- /container -->
 
 <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
 <script src="/assets/js/holder.min.js"></script>
 <script>
     $(document).ready(function() {

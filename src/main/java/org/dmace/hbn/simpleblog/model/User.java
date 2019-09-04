@@ -8,16 +8,19 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
 
+    private String email;
+
     private String city;
+
+    private String password;
 
     @CreatedDate
     private Date created;
@@ -53,6 +56,18 @@ public class User {
         return created;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -67,5 +82,21 @@ public class User {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
     }
 }
