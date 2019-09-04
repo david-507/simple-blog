@@ -58,19 +58,40 @@
     </section>
     <%--END JUMBOTRON--%>
 
+        <c:forEach items="${postList}" var="postItem">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <h1><a href="/post/${postItem.id}">${postItem.titulo}</a></h1>
+                    <div>
+                        <div class="pull-right" style="padding: 10px 0 0 5px;">${postItem.autor.nombre}</div>
+                        <img alt="User Pic" src="http://i.pravatar.cc/50?u=${postItem.autor.email}"
+                             class="img-circle img-responsive pull-right">
+                        <p></p>
+                    </div>
+                    <div style="clear: both; margin-bottom: 10px;"></div>
+                    <c:if test="${not empty postItem.url}">
+                        <p><a href="${postItem.url}">${postItem.url}</a></p>
+                    </c:if>
+                    <div class="dotdotdot">
+                        <p>${postItem.contenido}</p>
+                    </div>
+                    <div>
+					<span class="badge">Escrito el <fmt:formatDate pattern="dd/MM/yyyy" value="${postItem.fecha}" /> a las
+					<fmt:formatDate pattern="HH:mm:ss" value="${postItem.fecha}" /></span>
+                        <span class="label label-info">${(fn:length(postItem.comments) gt 0) ? fn:length(postItem.comments) : 'Sin '}
+                                ${(fn:length(postItem.comments) == 1) ? 'comentario' : 'comentarios'}</span>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </c:forEach>
+
     <%-- POSTS? --%>
     <c:if test="${not empty postList}">
     <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">Ultimos posts</h6>
         <c:forEach items="${postList}" var="postItem">
             <div class="media text-muted pt-3">
-                <h1><a href="/post/${postItem.id}">${postItem.titulo}</a></h1>
-                <div>
-                    <div class="pull-right" style="padding: 10px 0 0 5px;">${postItem.autor.nombre}</div>
-                    <img alt="User Pic" src="http://i.pravatar.cc/50?u=${postItem.autor.email}"
-                         class="img-circle img-responsive pull-right">
-                    <p></p>
-                </div>
                 <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded" />
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">${postItem.autor.nombre}</strong>
