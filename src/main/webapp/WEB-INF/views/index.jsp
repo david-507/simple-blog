@@ -23,7 +23,7 @@
 
 <%--HEADER MENU--%>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Simple blog</h5>
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">Simple blog</a></h5>
     <c:choose>
         <c:when test="${not empty sessionScope.user}">
             <jsp:include page="includes/menu_logged.jsp" flush="true">
@@ -46,7 +46,7 @@
     <%--JUMBOTRON--%>
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">Simple blog</h1>
+            <h1 class="jumbotron-heading">Simple blog <img src="/assets/img/lang-logo.png" /></h1>
             <h2 class="jumbotron-heading">Un blog sobre hibernate</h2>
             <p class="lead text-muted">Tutoriales, información y tips sobre la mejor tecnologia de persistencia Java y .Net.</p>
             <c:if test="${empty sessionScope.user}">
