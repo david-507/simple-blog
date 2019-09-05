@@ -1,11 +1,29 @@
 package org.dmace.hbn.simpleblog.model.bean;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class RegisterBean {
 
+    @NotNull
+    @Email
     private String email;
+
+    @NotNull
+    @Size(min=3, max=64)
     private String name;
+
+    @NotNull
+    @Size(min=3, max=64)
     private String city;
+
+    @NotNull
+    @Size(min=8, max=128)
     private String password;
+
+    @NotNull
+    @Size(min=8, max=128)
     private String passwordRepeat;
 
     public RegisterBean() {

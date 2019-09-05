@@ -33,10 +33,11 @@ public class User {
         this.posts = new ArrayList<>();
     }
 
-    public User(String name, String city, Date created) {
+    public User(String name, String email, String city, String password) {
         this.name = name;
+        this.email = email;
         this.city = city;
-        this.created = created;
+        this.password = password;
         this.posts = new ArrayList<>();
     }
 

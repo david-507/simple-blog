@@ -28,7 +28,7 @@ public class UserRepositoryTest {
 
     @Test
     public void whenSave_thenCorrectNumberOfUsers() {
-        User user = new User("me", "Vancouver", new Date());
+        User user = new User("me", "me@test.com","Vancouver", "hashedpassword");
         repository.save(user);
         List<User> users = (List<User>) repository.findAll();
 
