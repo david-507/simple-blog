@@ -6,8 +6,10 @@ import org.dmace.hbn.simpleblog.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +38,21 @@ public class RegisterController {
         if(br.hasErrors()){
             logger.info("Binding result has errors");
         } else {
-            User user = service.register(rb);
-            session.setAttribute("user", user);
-            result = "redirect:/";
+            User user = null;
+            try {
+                user = service.register(rb);
+                session.setAttribute("user", user);
+
+                result = "redirect:/";
+            } catch (DataIntegrityViolationException e) {
+                logger.warn("Oups.. trying to add a new user with an existing email ({}) ?", rb.getEmail());
+                logger.warn(e.getMessage());
+                br.addError(new FieldError("rb", "email", "Sorry, email \"" + rb.getEmail() + "\" is already taken"));
+            }
         }
         return result;
     }
+
+
 
 }

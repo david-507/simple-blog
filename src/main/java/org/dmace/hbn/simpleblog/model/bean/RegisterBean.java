@@ -19,11 +19,11 @@ public class RegisterBean {
     private String city;
 
     @NotNull
-    @Size(min=8, max=128)
+    @Size(min=6, max=128)
     private String password;
 
     @NotNull
-    @Size(min=8, max=128)
+    @Size(min=6, max=128)
     private String passwordRepeat;
 
     public RegisterBean() {
