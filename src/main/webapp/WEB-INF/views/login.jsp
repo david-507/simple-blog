@@ -6,7 +6,7 @@
 <head>
     <c:import url="includes/head.jsp" />
 
-    <link href="<c:url value="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/webjars/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/assets/css/login.css" />" rel="stylesheet">
 </head>
 
