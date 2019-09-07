@@ -20,5 +20,7 @@ public interface StorageService {
 
     void deleteAll();
 
-    public boolean delete(String filename);
+    boolean delete(String filename);
+
+    String generateUrlFor(MultipartFile file, String email);
 }

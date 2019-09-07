@@ -77,17 +77,38 @@
             <div class="form-group">
                 <label for="file" class="sr-only">Avatar</label>
                 <input id="file" name="file" type="file" class="form-control input-file" />
+                <div class="invalid-feedback" id="file-error"></div>
             </div>
 
-        <button type="submit" class="btn btn-primary">Registrarme</button>
+        <button id="sbutton" type="submit" class="btn btn-primary">Registrarme</button>
     </form:form>
-
-
 
 </main>
 
 <c:import url="/WEB-INF/views/includes/footer.jsp" />
 
+<script>
+    $(document).ready(function() {
+        const MAX_FILE_SIZE = 2 * 1024 * 1024;
+        const fileInput = $('#file');
+        const errorDiv = $('#file-error');
 
+        $(fileInput).on('change', function(evt) {
+            var file = this.files[0];
+
+            if( file!=null && file.size > MAX_FILE_SIZE ) {
+                $(errorDiv).html("The file you are about to upload is too big. Max size is 2Mb.");
+                $(fileInput).addClass("is-invalid");
+                console.log(this.files[0].size);
+                $('#sbutton').attr("disabled","disabled");
+            } else {
+                $(errorDiv).html("");
+                $(fileInput).removeClass("is-invalid");
+                $('#sbutton').removeAttr("disabled");
+            }
+
+        });
+    });
+</script>
 
 </body>

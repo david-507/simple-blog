@@ -1,6 +1,6 @@
 package org.dmace.hbn.simpleblog.controller;
 
-import org.dmace.hbn.simpleblog.controller.files.FilesController;
+import org.dmace.hbn.simpleblog.exceptions.StorageException;
 import org.dmace.hbn.simpleblog.model.User;
 import org.dmace.hbn.simpleblog.model.bean.RegisterBean;
 import org.dmace.hbn.simpleblog.service.RegisterService;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -50,33 +48,30 @@ public class RegisterController {
         } else {
             User user = null;
             try {
-                if(!file.isEmpty()) {
-                    String avatar = storageService.store(file, rb.getEmail());
+                if(!file.isEmpty()) // add avatar url to user
+                    rb.setImg(storageService.generateUrlFor(file, rb.getEmail()));
 
-                    UriComponents ucb = MvcUriComponentsBuilder
-                            .fromMethodName(FilesController.class,
-                                    "serveFile",
-                                    avatar).build();
-
-                    rb.setImg(ucb.toUriString());
-                }
-
+                // create user
                 user = registerService.register(rb);
 
-
-
+                // user has been saved to DB. Store the file
+                if(!file.isEmpty()) {
+                    storageService.store(file, rb.getEmail());
+                }
                 session.setAttribute("user", user);
-
                 result = "redirect:/";
             } catch (DataIntegrityViolationException e) {
                 logger.warn("Oups.. trying to add a new user with an existing email ({}) ?", rb.getEmail());
                 logger.warn(e.getMessage());
                 br.addError(new FieldError("rb", "email", "Sorry, email \"" + rb.getEmail() + "\" is already taken"));
+            } catch (StorageException se) {
+                logger.error("avatar for user {} could not be saved!", rb.getEmail());
+                if(user!=null)// delete avatar url from DB
+                    registerService.deleteAvatar(user);
             }
         }
         return result;
     }
-
 
 
 }

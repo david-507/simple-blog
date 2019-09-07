@@ -1,6 +1,7 @@
 package org.dmace.hbn.simpleblog.service;
 
 import org.dmace.hbn.simpleblog.config.StorageProperties;
+import org.dmace.hbn.simpleblog.controller.files.FilesController;
 import org.dmace.hbn.simpleblog.exceptions.StorageException;
 import org.dmace.hbn.simpleblog.exceptions.StorageFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,8 +47,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public String store(MultipartFile file, String email) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
-        String extension = StringUtils.getFilenameExtension(filename);
-        String storedFilename = email + "." + extension;
+        String storedFilename = generateFilename(filename, email);
 
         try {
             if (file.isEmpty()) {
@@ -114,5 +116,23 @@ public class FileSystemStorageService implements StorageService {
         if( toDelete.exists() && toDelete.isFile() )
             return toDelete.delete();
         return false;
+    }
+
+    @Override
+    public String generateUrlFor(MultipartFile file, String email) {
+        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String storedFilename = generateFilename(filename, email);
+
+        UriComponents ucb = MvcUriComponentsBuilder
+                .fromMethodName(FilesController.class,
+                        "serveFile",
+                        storedFilename).build();
+
+        return ucb.toUriString();
+    }
+
+    private String generateFilename(String filename, String email) {
+        String extension = StringUtils.getFilenameExtension(filename);
+        return email + "." + extension;
     }
 }

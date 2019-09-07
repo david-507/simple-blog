@@ -22,6 +22,12 @@ public class RegisterService {
         return repository.save(user);
     }
 
+    /** Removes the avatar from the given user */
+    public void deleteAvatar(User user) {
+        user.setAvatar(null);
+        repository.save(user);
+    }
+
     /** Creates a new User instance with the given Bean values */
     private User toUser(RegisterBean rb) {
         User user = new User(rb.getName(), rb.getEmail(), rb.getCity(), BCrypt.hashpw(rb.getPassword(), BCrypt.gensalt()));
