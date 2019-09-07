@@ -9,14 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        registry.addResourceHandler("/assets/**")
-                .addResourceLocations("/assets/");
+//        registry.addResourceHandler("/assets/**")
+//                .addResourceLocations("/assets/");
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("/webjars/")

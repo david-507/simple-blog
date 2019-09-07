@@ -16,7 +16,7 @@
 
 <%--HEADER MENU--%>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <c:import url="includes/menu.jsp" />
+    <c:import url="/WEB-INF/views/includes/menu.jsp" />
 </div>
 <%--END HEADER MENU--%>
 
@@ -80,7 +80,7 @@
 
 </main>
 
-<c:import url="includes/footer.jsp" />
+<c:import url="/WEB-INF/views/includes/footer.jsp" />
 
 
 
