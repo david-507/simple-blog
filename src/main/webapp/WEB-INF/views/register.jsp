@@ -27,7 +27,7 @@
     <%-- Need to use contextPath because cannot use c:url inside <form:form ?? --%>
     <c:set var="action" value="${pageContext.servletContext.contextPath}/signup" />
 
-    <form:form action="${action}" modelAttribute="rb" id="rform" method="post">
+    <form:form action="${action}" modelAttribute="rb" id="rform" method="post" enctype="multipart/form-data">
         <div class="form-row">
             <spring:bind path="name">
             <div class="form-group col-md-6">
@@ -73,6 +73,12 @@
             <form:errors path="city" cssClass="invalid-feedback" element="div" />
         </div>
         </spring:bind>
+
+            <div class="form-group">
+                <label for="file" class="sr-only">Avatar</label>
+                <input id="file" name="file" type="file" class="form-control input-file" />
+            </div>
+
         <button type="submit" class="btn btn-primary">Registrarme</button>
     </form:form>
 

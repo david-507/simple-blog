@@ -26,6 +26,8 @@ public class RegisterBean {
     @Size(min=6, max=128)
     private String passwordRepeat;
 
+    private String img;
+
     public RegisterBean() {
     }
 
@@ -49,6 +51,10 @@ public class RegisterBean {
         return passwordRepeat;
     }
 
+    public String getImg() {
+        return img;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -67,5 +73,9 @@ public class RegisterBean {
 
     public void setPasswordRepeat(String passwordRepeat) {
         this.passwordRepeat = passwordRepeat;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

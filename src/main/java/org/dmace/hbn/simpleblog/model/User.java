@@ -22,6 +22,8 @@ public class User {
 
     private String password;
 
+    private String avatar;
+
     @CreatedDate
     private Date created;
 
@@ -69,6 +71,10 @@ public class User {
         return posts;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -99,5 +105,9 @@ public class User {
 
     public void addPost(Post post) {
         this.posts.add(post);
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

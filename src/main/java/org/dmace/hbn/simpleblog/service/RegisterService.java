@@ -24,7 +24,9 @@ public class RegisterService {
 
     /** Creates a new User instance with the given Bean values */
     private User toUser(RegisterBean rb) {
-        return new User(rb.getName(), rb.getEmail(), rb.getCity(), BCrypt.hashpw(rb.getPassword(), BCrypt.gensalt()));
+        User user = new User(rb.getName(), rb.getEmail(), rb.getCity(), BCrypt.hashpw(rb.getPassword(), BCrypt.gensalt()));
+        user.setAvatar(rb.getImg());
+        return user;
     }
 
 }
