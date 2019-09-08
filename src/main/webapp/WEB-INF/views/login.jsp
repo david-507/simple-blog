@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <c:import url="includes/head.jsp" />
+    <c:import url="/WEB-INF/views/includes/head.jsp" />
 
     <link href="<c:url value="/webjars/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/assets/css/login.css" />" rel="stylesheet">
